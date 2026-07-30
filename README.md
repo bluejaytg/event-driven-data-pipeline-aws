@@ -1,4 +1,5 @@
 #Event-Driven Data Pipeline on AWS
+
 Problem Statement
 Legacy healthcare data ingestion systems depend on rigid, synchronous batch jobs that fail or bottleneck under sudden spikes in data volume. When high-volume payloads arrive intermittently, unmanaged pipelines suffer from data loss, resource over-provisioning, and severe processing backlogs.
 
