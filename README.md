@@ -1,6 +1,6 @@
-#Event-Driven Data Pipeline on AWS
+### Event-Driven Data Pipeline on AWS
 
-Problem Statement
+## Problem Statement
 Legacy healthcare data ingestion systems depend on rigid, synchronous batch jobs that fail or bottleneck under sudden spikes in data volume. When high-volume payloads arrive intermittently, unmanaged pipelines suffer from data loss, resource over-provisioning, and severe processing backlogs.
 
 Standard pipeline approaches introduce two critical liabilities:
@@ -9,7 +9,35 @@ Unmanaged Pipeline Backpressure: Without decoupled queueing, ingestion spikes cr
 
 Schema Drift and Data Corruption: Malformed payloads ingested directly into primary data stores corrupt analytical datasets and break downstream reporting queries.
 
-Architecture Style
+## How to Run Locally
+
+### Prerequisites
+* **Python 3.9+** installed
+* **AWS CLI** installed and configured (`aws configure`) with permissions to deploy CloudFormation stacks, Lambda functions, and S3 resources
+* **AWS SAM CLI** or **Terraform** (if utilizing infrastructure as code files in this repo)
+
+### Setup Steps
+
+```bash
+# 1. Clone the repository and navigate into the directory
+git clone [https://github.com/bluejaytg/event-driven-data-pipeline-aws.git](https://github.com/bluejaytg/event-driven-data-pipeline-aws.git)
+cd event-driven-data-pipeline-aws
+
+# 2. Create and activate a Python virtual environment
+python3 -m venv venv
+source venv/bin/activate  # On Windows: venv\Scripts\activate
+
+# 3. Install local dependencies & AWS SDKs
+pip install -r requirements.txt
+
+# 4. Deploy infrastructure / test event handler locally
+# Option A: Deploy stack via SAM CLI
+sam build && sam deploy --guided
+
+# Option B: Run Lambda / event triggers locally
+python main.py  # Or test handler locally via 'sam local invoke'
+
+### Architecture Style
 This project implements an Event-Driven, Asynchronous Data Ingestion and Transformation Pipeline using managed AWS services and containerized PySpark.
 
 [S3 Event / Payload Arrival]
