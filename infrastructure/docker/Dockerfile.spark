@@ -1,0 +1,15 @@
+FROM bitnami/spark:3.5.0
+
+USER root
+RUN apt-get update && apt-get install -y wget && rm -rf /var/lib/apt/lists/*
+
+# Install PostgreSQL JDBC Driver
+RUN wget https://jdbc.postgresql.org/download/postgresql-42.7.1.jar -O /opt/bitnami/spark/jars/postgresql-42.7.1.jar
+
+WORKDIR /app
+COPY pyspark_jobs/ /app/pyspark_jobs/
+
+ENV PYTHONPATH="${PYTHONPATH}:/app/pyspark_jobs"
+
+USER 1001
+ENTRYPOINT ["spark-submit", "--master", "local[*]", "/app/pyspark_jobs/batch_transformation.py"]
